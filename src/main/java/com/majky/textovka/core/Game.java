@@ -1,5 +1,7 @@
 package com.majky.textovka.core;
 
+import com.majky.textovka.items.Sword;
+
 public class Game {
     private Player player;
     private GameLogic gameLogic = new GameLogic();
@@ -22,6 +24,7 @@ public class Game {
 
         startingRoom.addPath(new Path(anotherRoom));
         anotherRoom.addPath(new Path(startingRoom));
+        anotherRoom.addItem(new Sword("Mec, brutalny"));
 
         player.setCurrentRoom(startingRoom);
     }

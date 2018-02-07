@@ -1,7 +1,7 @@
 package com.majky.textovka.actions;
 
-public interface Action<T> {
-    void execute(T subject);
+public interface Action {
+    void execute();
 
     String getDescription();
 }

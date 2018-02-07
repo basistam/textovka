@@ -5,8 +5,8 @@ import com.majky.textovka.items.Item;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Player {
-    private Set<Item> inventory = new HashSet<Item>();
+public class Player implements Storage {
+    private Set<Item> inventory = new HashSet<>();
 
     private Room currentRoom;
 
@@ -18,15 +18,18 @@ public class Player {
         this.currentRoom = currentRoom;
     }
 
-    public void putInInventory(Item item) {
+    @Override
+    public Set<Item> getItems() {
+        return inventory;
+    }
+
+    @Override
+    public void addItem(Item item) {
         inventory.add(item);
     }
 
-    public void removeFromInventory(Item item) {
+    @Override
+    public void removeItem(Item item) {
         inventory.remove(item);
-    }
-
-    public Set<Item> getInventory() {
-        return inventory;
     }
 }

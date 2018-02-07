@@ -2,10 +2,13 @@ package com.majky.textovka.core;
 
 import com.majky.textovka.actions.Action;
 import com.majky.textovka.actions.MoveAction;
+import com.majky.textovka.actions.TransferItem;
+import com.majky.textovka.items.Item;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class GameLogic {
     public void play(Player player) {
@@ -19,21 +22,16 @@ public class GameLogic {
         if (chosenOption > actions.size()) {
             System.out.println("Wrong entry");
         } else {
-            executeAction(actions.get(chosenOption - 1), player);
+            actions.get(chosenOption - 1).execute();
         }
 
         play(player);
     }
 
-    private void executeAction(Action action, Player player) {
-        if (action instanceof MoveAction) {
-            ((MoveAction) action).execute(player);
-        }
-    }
-
     private void printGameStatus(Player player) {
         System.out.println(String.format("Room:\n %s", player.getCurrentRoom().getDescription()));
-        System.out.println(String.format("Inventory:\n %s", player.getInventory()));
+        System.out.println(String.format("Items in room:\n%s", player.getCurrentRoom().getItems().stream().map(Item::getDescription).collect(Collectors.joining("\n", " ", ""))));
+        System.out.println(String.format("Inventory:\n %s", player.getItems().stream().map(Item::getDescription).collect(Collectors.joining("\n", " ", ""))));
 
     }
 
@@ -54,7 +52,10 @@ public class GameLogic {
     private List<Action> generateActions(Player player) {
         List<Action> actions = new LinkedList<>();
 
-        player.getCurrentRoom().getPaths().forEach(path -> actions.add(new MoveAction(path.getToRoom())));
+        final Room currentRoom = player.getCurrentRoom();
+
+        currentRoom.getPaths().forEach(path -> actions.add(new MoveAction(path.getToRoom(), player)));
+        currentRoom.getItems().forEach(item -> actions.add(new TransferItem(item, currentRoom, player)));
 
         return actions;
     }
