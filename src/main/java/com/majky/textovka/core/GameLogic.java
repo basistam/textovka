@@ -21,14 +21,14 @@ public class GameLogic {
         } else {
             executeAction(actions.get(chosenOption - 1), player);
         }
+
+        play(player);
     }
 
     private void executeAction(Action action, Player player) {
         if (action instanceof MoveAction) {
             ((MoveAction) action).execute(player);
         }
-
-        play(player);
     }
 
     private void printGameStatus(Player player) {
