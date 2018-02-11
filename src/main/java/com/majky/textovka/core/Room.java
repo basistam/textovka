@@ -1,6 +1,7 @@
 package com.majky.textovka.core;
 
 import com.majky.textovka.items.Item;
+import com.majky.textovka.persons.Person;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -10,8 +11,9 @@ import java.util.Set;
 public class Room implements Storage {
     private final String name;
     private final String description;
-    private Set<Item> items = new HashSet<Item>();
-    private List<Path> paths = new LinkedList<Path>();
+    private Set<Item> items = new HashSet<>();
+    private List<Path> paths = new LinkedList<>();
+    private List<Person> persons = new LinkedList<>();
 
     public Room(String name, String description) {
         this.name = name;
@@ -47,5 +49,13 @@ public class Room implements Storage {
 
     public String getName() {
         return name;
+    }
+
+    public List<Person> getPersons() {
+        return persons;
+    }
+
+    public void addPerson(Person person) {
+        persons.add(person);
     }
 }
